@@ -64,4 +64,14 @@ export default class Actor {
   getHeight() {
     return this.height;
   }
+
+  collidesWith(other: Actor): boolean {
+    return (
+      this !== other &&
+      this.x < other.x + other.width &&
+      this.x + this.width > other.x &&
+      this.y < other.y + other.height &&
+      this.y + this.height > other.y
+    );
+  }
 }

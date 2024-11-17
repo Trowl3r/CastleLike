@@ -18,7 +18,7 @@ export default class Attack {
   // Base function, doesnt work properly when not overwritten by child class
   createAttackActor(): AttackActor {
     // Default attack, because multiple constructors arent allowed
-    return new AttackActor(this.src, 0, 0, 0, 0, 0);
+    return new AttackActor(this, this.src, 0, 0, 0, 0, 0);
   }
 
   getActorClass(): new (...args: any[]) => AttackActor {
@@ -45,4 +45,7 @@ export default class Attack {
     this.lastExecution = lastExecution; 
   }
 
+  getDamage() {
+    return this.damage;
+  }
 }

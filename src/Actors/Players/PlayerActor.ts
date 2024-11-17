@@ -1,11 +1,15 @@
 import Actor from "../Actor.js";
 import Attack from "../../Attack/Attack.js";
-
+import CollisionManager from "../CollisionManager.js";
+import EnemyActor from "../Enemys/EnemyActor.js";
+import { castRightActor } from "../../helpers/functions.js";
+import gameState from "../../GameState.js";
 
 export default class PlayerActor extends Actor {
   private speedX: number = 0;
   private speedY: number = 0;
   private moveSpeed: number = 5;
+  private life: number = 10;
 
   // TODO: Create an Array with exactly 5 fields that are null,
   // and get replaced on attack add
@@ -23,6 +27,7 @@ export default class PlayerActor extends Actor {
 
     // Adds the first Attack for every character
     this.attacks = [attack];
+    this.registerEnemyCollision();
   }
 
   // GETTERS
@@ -68,5 +73,18 @@ export default class PlayerActor extends Actor {
 
   addAttack(attack: Attack) {
     if (this.attacks.length <= 5) this.attacks.push(attack);
+  }
+
+  private registerEnemyCollision() {
+    CollisionManager.registerCollisionCallback(
+      PlayerActor,
+      EnemyActor,
+      (actorA: Actor, actorB: Actor) => {
+        const enemy = castRightActor(actorA, actorB, EnemyActor);
+
+        this.life -= enemy!.getDamage();
+        if (this.life <= 0) gameState.removeActor(this);
+      }
+    );
   }
 }

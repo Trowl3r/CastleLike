@@ -1,0 +1,1 @@
+export type ActorClass<T> = new (...args: any[]) => T;
