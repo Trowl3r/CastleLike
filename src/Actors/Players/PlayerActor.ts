@@ -1,18 +1,33 @@
-import Actor from "./Actor.js";
+import Actor from "../Actor.js";
+import Attack from "../../Attack/Attack.js";
 
-export class PlayerActor extends Actor {
+
+export default class PlayerActor extends Actor {
   private speedX: number = 0;
   private speedY: number = 0;
   private moveSpeed: number = 5;
+
+  // TODO: Create an Array with exactly 5 fields that are null,
+  // and get replaced on attack add
+  private attacks: Array<Attack>;
 
   constructor(
     src: string,
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
+    attack: Attack
   ) {
     super(src, x, y, width, height);
+
+    // Adds the first Attack for every character
+    this.attacks = [attack];
+  }
+
+  // GETTERS
+  getAttacks() {
+    return this.attacks;
   }
 
   handleKeyDown(event: KeyboardEvent) {
@@ -49,5 +64,9 @@ export class PlayerActor extends Actor {
     this.x += this.speedX;
     this.y += this.speedY;
     this.draw(cameraX, cameraY);
+  }
+
+  addAttack(attack: Attack) {
+    if (this.attacks.length <= 5) this.attacks.push(attack);
   }
 }

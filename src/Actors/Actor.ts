@@ -29,6 +29,10 @@ export default class Actor {
     this.scene = scene;
   }
 
+  getImage() {
+    return this.image;
+  }
+
   draw(cameraX: number, cameraY: number) {
     const ctx = Actor.scene.getCtx();
     ctx?.drawImage(
@@ -51,5 +55,13 @@ export default class Actor {
 
   getY() {
     return this.y;
+  }
+
+  getWidth() {
+    return this.width;
+  }
+
+  getHeight() {
+    return this.height;
   }
 }

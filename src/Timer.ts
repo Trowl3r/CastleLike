@@ -1,3 +1,4 @@
+
 export default class Timer {
   private startTime: number = 0; // When the timer started
   private elapsedTime: number = 0; // Time elapsed while timer is running
@@ -33,9 +34,13 @@ export default class Timer {
     return this.elapsedTime;
   }
 
+  getTotalSeconds() {
+    return Math.floor(this.getElapsedTime() / 1000);
+  }
+
   // Get the elapsed time formatted as "mm:ss"
   getFormattedTime(): string {
-    const totalSeconds = Math.floor(this.getElapsedTime() / 1000);
+    const totalSeconds = this.getTotalSeconds();
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
