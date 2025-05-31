@@ -4,7 +4,7 @@ import {
   HUD_IMAGE_SIZE,
   HUD_RECT_SIZE,
   HUD_TIMER_Y,
-} from "../constants.js";
+} from "../helpers/constants.js";
 import gameState from "../GameState.js";
 
 // TODO: Put most static values into a constants folder

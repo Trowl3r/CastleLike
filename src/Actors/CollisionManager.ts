@@ -1,9 +1,7 @@
 import { ActorClass } from "../helpers/types.js";
 import Actor from "./Actor.js";
-import Wizard from "./Players/Wizard.js";
 
 type CollisionCallback = (actorA: Actor, actorB: Actor) => void;
-
 
 export class CollisionManager {
   private collisionCallbacks: Map<string, CollisionCallback>;
@@ -42,6 +40,10 @@ export class CollisionManager {
 
         if (actorA.collidesWith(actorB) && actorA !== actorB) {
           const callback = this.getCallbackForCollision(actorA, actorB);
+          // TODO: Fix a bug, that clustered enemys hit by single attacks still
+          // all recieve the damage. return can't be used because auf aoe attacks
+          // and when multiple enemys attack the player, he should recieve damage
+          // of all enemys
           if (callback) callback(actorA, actorB);
         }
       }

@@ -1,5 +1,6 @@
 import Actor from "../Actor.js";
 import gameState from "../../GameState.js";
+import BaseXpPoints from "../XpPoints/BaseXpPoints.js";
 
 export default class EnemyActor extends Actor {
   private name: string;
@@ -55,11 +56,18 @@ export default class EnemyActor extends Actor {
     this.draw(cameraX, cameraY);
   }
 
+  // Base kill class, Removes simple XP Point,
+  // Because most enemys will only have base XP as a return.
+  // Override by boss or special enemys
   takeDamage(damage: number) {
     this.life -= damage;
 
     if (this.life <= 0) {
       gameState.removeActor(this);
+
+      const x = this.x + this.getWidth() / 2;
+      const y = this.y + this.getHeight() / 2;
+      gameState.addActor(new BaseXpPoints(x, y));
     }
   }
 }

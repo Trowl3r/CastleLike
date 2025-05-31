@@ -7,6 +7,7 @@ import { AttackScheduler } from "./Attack/AttackScheduler.js";
 import Camera from "./Camera.js";
 import { ActorClass } from "./helpers/types.js";
 import Timer from "./Timer.js";
+import { CardManager } from "./UI/CardManager.js";
 
 // TODO: Think about making the store better accesible,
 // instead of always using this.store. etc.
@@ -17,6 +18,7 @@ export class GameState {
   private camera: Camera;
   private timer: Timer;
   private attackScheduler: AttackScheduler;
+  private cardManager: CardManager;
 
   constructor() {
     this.actors = new Set();
@@ -24,10 +26,13 @@ export class GameState {
     this.actors.add(this.player);
     // TODO: Remove 
     this.actors.add(new Zombie(2300, 2300, 100, 100))
+    
+
 
     this.camera = new Camera(this.player.getX(), this.player.getX());
     this.timer = new Timer();
     this.attackScheduler = new AttackScheduler();
+    this.cardManager = new CardManager();
   }
 
   getPlayer() {
@@ -57,6 +62,10 @@ export class GameState {
 
   getTimer() {
     return this.timer;
+  }
+
+  getCardmanager() {
+    return this.cardManager;
   }
 
   // The functions are contained in the Game State, so they don't need to be 

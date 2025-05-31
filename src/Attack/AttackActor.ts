@@ -1,5 +1,8 @@
 import Actor from "../Actors/Actor.js";
+import CollisionManager from "../Actors/CollisionManager.js";
+import EnemyActor from "../Actors/Enemys/EnemyActor.js";
 import gameState from "../GameState.js";
+import { castRightActor } from "../helpers/functions.js";
 import Attack from "./Attack.js";
 
 export default class AttackActor extends Actor {
@@ -19,6 +22,18 @@ export default class AttackActor extends Actor {
 
     this.identifier = identifier;
     this.speed = speed;
+
+    CollisionManager.registerCollisionCallback(
+      AttackActor,
+      EnemyActor,
+      (actorA: Actor, actorB: Actor) => {
+        const attack = castRightActor(actorA, actorB, AttackActor);
+        const enemy = castRightActor(actorA, actorB, EnemyActor);
+
+        enemy!.takeDamage(attack!.getIdentifier().getDamage());
+        gameState.removeActor(this);
+      }
+    )
   }
 
   getIdentifier() {

@@ -30,7 +30,9 @@ export default class GameScene {
   start() {
     gameState.getTimer().start();
     const loop = () => {
-      this.update();
+      // TODO: Fix the Xp Point that gets rendered away AFTER freeze is unset 
+      if(!gameState.getTimer().isFrozen())
+        this.update();
       requestAnimationFrame(loop);
     };
 
